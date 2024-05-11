@@ -8,6 +8,8 @@ public class RecipeSearchResultVO {
     private int offset;
     private int number;
 
+
+
     // Getters and Setters
 
     public List<RecipeInfoVO> getResults() {

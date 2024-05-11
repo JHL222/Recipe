@@ -4,10 +4,10 @@ com/example/edu/EduOpenapiApplication.java
  com.example.edu.EduOpenapiApplication
 com/example/edu/model/RecipeSearchResultVO.java
  com.example.edu.model.RecipeSearchResultVO
-com/example/edu/model/RecipeInfoVO.java
- com.example.edu.model.RecipeInfoVO
 com/example/edu/ServletInitializer.java
  com.example.edu.ServletInitializer
+com/example/edu/model/RecipeInfoVO.java
+ com.example.edu.model.RecipeInfoVO
 com/example/edu/adapter/SpoonacularAdapter.java
  com.example.edu.adapter.SpoonacularAdapter
 com/example/edu/controller/RecipeController.java

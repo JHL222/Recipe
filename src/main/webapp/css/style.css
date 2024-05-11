@@ -1,3 +1,23 @@
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.slide {
+    display: none;
+    width: 100%;
+}
+.slide img {
+    width: 100%;
+    height: 35%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
 li{
     list-style-type: none;
 }
@@ -26,6 +46,7 @@ li{
 }
 
 .searchbar input {
+    justify-content: center;
     width: 600px;
     height: 40px;
     font-size: 110%;
@@ -49,6 +70,7 @@ li{
     margin-top: 40px;
     margin-bottom: 10px;
     font-size: 20px;
+    text-align: center;
 }
 
 .recipe {
@@ -76,4 +98,23 @@ li{
     display: inline-block;
     margin-right: 30px;
     border-radius: 20px;
+}
+.searchbar{
+    text-align: center;
+}
+.searchbar button {
+    backface-visibility: hidden;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    border-color: #111;
+    color: white;
+    background: linear-gradient(180deg,#555 0%,#222 49%, #000 51%,#222 100%);
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,.5),0px 1px 3px rgba(0,0,0,0.3);
+}
+.searchbar button:active{
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);
 }

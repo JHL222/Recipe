@@ -10,11 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import com.example.edu.model.RecipeInfoVO;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class SpoonacularAdapter {
@@ -53,11 +57,53 @@ public class SpoonacularAdapter {
                 entity,
                 RecipeInfoVO.class);
 
-        return response.getBody();
+        RecipeInfoVO recipeInfo = response.getBody();
+
+        if (recipeInfo != null && recipeInfo.getId() != 0) {
+            String ingredientsUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/"
+                    + recipeInfo.getId() + "/ingredientWidget.json";
+
+            HttpHeaders ingredientsHeaders = createHeaders();
+            HttpEntity<?> ingredientsEntity = new HttpEntity<>(ingredientsHeaders);
+
+            ResponseEntity<String> ingredientsResponse = restTemplate.exchange(
+                    ingredientsUrl,
+                    HttpMethod.GET,
+                    ingredientsEntity,
+                    String.class);
+
+            List<String> ingredientsList = parseIngredientsFromResponse(ingredientsResponse.getBody());
+            recipeInfo.setIngredients(ingredientsList);
+        }
+
+        return recipeInfo;
+    }
+
+    private List<String> parseIngredientsFromResponse(String responseBody) {
+        List<String> ingredientsList = new ArrayList<>();
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(responseBody);
+
+            if (root.has("ingredients")) {
+                JsonNode ingredientsNode = root.get("ingredients");
+                Iterator<JsonNode> iterator = ingredientsNode.iterator();
+                while (iterator.hasNext()) {
+                    JsonNode ingredientNode = iterator.next();
+                    String ingredient = ingredientNode.get("name").asText();
+                    ingredientsList.add(ingredient);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ingredientsList;
     }
 
     public List<RecipeInfoVO> searchRecipes(String query) {
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + query;
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + query + "&instructionsRequired=true";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
