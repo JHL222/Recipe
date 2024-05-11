@@ -62,7 +62,8 @@ public class SpoonacularAdapter {
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("query", query)
-                .queryParam("apiKey", apiKey);
+                .queryParam("apiKey", apiKey)
+                .queryParam("number", 100);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -86,7 +87,8 @@ public class SpoonacularAdapter {
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("apiKey", apiKey)
-                .queryParam("addRecipeInformation", true); // 레시피 정보 포함 여부
+                .queryParam("addRecipeInformation", true)
+                .queryParam("number", 100); // 최대 100개의 결과를 가져옵니다.
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 

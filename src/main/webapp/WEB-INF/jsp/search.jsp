@@ -18,11 +18,12 @@
 </header>
 
 <h1>Recipe Search</h1>
-
+<form action="/search" method="GET">
 <div class="searchbar">
     <input type="text" name="query" placeholder="Search recipes..." required>
     <button type="submit">Search</button>
 </div>
+</form>
 
 <div id="searchResults">
     <c:if test="${not empty recipes}">
