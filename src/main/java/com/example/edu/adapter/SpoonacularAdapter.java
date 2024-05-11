@@ -80,4 +80,28 @@ public class SpoonacularAdapter {
         return new ArrayList<>();
     }
 
+    public List<RecipeInfoVO> showRecipes() {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
+
+        HttpHeaders headers = createHeaders();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("apiKey", apiKey)
+                .queryParam("addRecipeInformation", true); // 레시피 정보 포함 여부
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<RecipeSearchResultVO> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                entity,
+                RecipeSearchResultVO.class);
+
+        RecipeSearchResultVO result = response.getBody();
+        if (result != null && result.getResults() != null) {
+            return result.getResults();
+        }
+
+        return new ArrayList<>();
+    }
+
 }

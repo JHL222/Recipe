@@ -33,4 +33,10 @@ public class RecipeController {
         return "search";
     }
 
+    @GetMapping("/Home")
+    public String home(Model model){
+        List<RecipeInfoVO> recipes = spoonacularAdapter.showRecipes();
+        model.addAttribute("recipes", recipes);
+        return "home";
+    }
 }

@@ -2,33 +2,43 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
     <title>Recipe Search</title>
 </head>
 <body>
-<h1>Recipe Search</h1>
-<form action="/search" method="GET">
-    <label for="query">Search Recipes:</label>
-    <input type="text" id="query" name="query" required>
-    <button type="submit">Search</button>
-</form>
+<header>
+    <div class='topbar'>
+        <div class='logo'>
 
-<%-- 검색 결과를 표시할 부분 --%>
+        </div>
+        <div class='button'>
+            <button class='login'>Login</button>
+        </div>
+    </div>
+</header>
+
+<h1>Recipe Search</h1>
+
+<div class="searchbar">
+    <input type="text" name="query" placeholder="Search recipes..." required>
+    <button type="submit">Search</button>
+</div>
+
 <div id="searchResults">
-    <%-- 검색 결과가 있을 경우에만 반복문 실행 --%>
     <c:if test="${not empty recipes}">
-        <h2>Search Results</h2>
-        <ul>
-                <%-- 각 검색 결과를 반복하여 표시 --%>
+        <div class="menuDiv">
+            <h2>Search Results</h2>
             <c:forEach var="recipe" items="${recipes}">
-                <li>
-                    <h3>${recipe.title}</h3>
+                <div class="recipe">
                     <c:if test="${not empty recipe.image}">
-                        <img width="300px" src="https://spoonacular.com/recipeImages/${recipe.image}" alt="${recipe.title}">
+                        <img src="https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg" class="menuImg" />
                     </c:if>
-                </li>
+                    <h3 class="menuTitle">${recipe.title}</h3>
+                </div>
             </c:forEach>
-        </ul>
+        </div>
     </c:if>
 </div>
+
 </body>
 </html>
