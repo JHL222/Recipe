@@ -1,5 +1,5 @@
-com/example/edu/config/AppConfig.java
- com.example.edu.config.AppConfig
+com/example/edu/adapter/SpoonacularAdapter.java
+ com.example.edu.adapter.SpoonacularAdapter
 com/example/edu/EduOpenapiApplication.java
  com.example.edu.EduOpenapiApplication
 com/example/edu/model/RecipeSearchResultVO.java
@@ -8,11 +8,7 @@ com/example/edu/model/RecipeInfoVO.java
  com.example.edu.model.RecipeInfoVO
 com/example/edu/ServletInitializer.java
  com.example.edu.ServletInitializer
-com/example/edu/adapter/SpoonacularAdapter.java
- com.example.edu.adapter.SpoonacularAdapter
- com.example.edu.adapter.SpoonacularAdapter$FetchRecipesResponse
- com.example.edu.adapter.SpoonacularAdapter$FetchRecipesResultItem
- com.example.edu.adapter.SpoonacularAdapter$SearchResponse
- com.example.edu.adapter.SpoonacularAdapter$SearchResultItem
 com/example/edu/controller/RecipeController.java
  com.example.edu.controller.RecipeController
+com/example/edu/config/AppConfig.java
+ com.example.edu.config.AppConfig

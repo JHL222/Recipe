@@ -1,5 +1,6 @@
 package com.example.edu.adapter;
 
+import com.example.edu.model.RecipeSearchResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -56,136 +57,27 @@ public class SpoonacularAdapter {
     }
 
     public List<RecipeInfoVO> searchRecipes(String query) {
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search";
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + query;
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("apiKey", apiKey)
                 .queryParam("query", query)
-                .queryParam("number", 50); // 50개씩 가져오기
+                .queryParam("apiKey", apiKey);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<SearchResponse> response = restTemplate.exchange(
+        ResponseEntity<RecipeSearchResultVO> response = restTemplate.exchange(
                 builder.toUriString(),
                 HttpMethod.GET,
                 entity,
-                SearchResponse.class);
+                RecipeSearchResultVO.class);
 
-        List<RecipeInfoVO> searchResults = new ArrayList<>();
-        if (response.getBody() != null && response.getBody().getResults() != null) {
-            for (SearchResultItem item : response.getBody().getResults()) {
-                RecipeInfoVO recipeInfo = new RecipeInfoVO();
-                recipeInfo.setTitle(item.getTitle());
-                recipeInfo.setImage(item.getImage());
-                // 다른 필요한 정보들도 추가할 수 있음
-                searchResults.add(recipeInfo);
-            }
+        RecipeSearchResultVO result = response.getBody();
+        if (result != null && result.getResults() != null) {
+            return result.getResults();
         }
 
-        return searchResults;
-    }
-    private static class SearchResponse {
-        private List<SearchResultItem> results;
-
-        public List<SearchResultItem> getResults() {
-            return results;
-        }
-
-        public void setResults(List<SearchResultItem> results) {
-            this.results = results;
-        }
-    }
-
-    private static class SearchResultItem {
-        private String title;
-        private String image;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-    }
-    public List<RecipeInfoVO> fetchRecipes() {
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
-
-        HttpHeaders headers = createHeaders();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("number", 50) // 50개씩 가져오기
-                .queryParam("sort", "id"); // ID 순서대로 정렬
-
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<FetchRecipesResponse> response = restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                entity,
-                FetchRecipesResponse.class);
-
-        List<RecipeInfoVO> recipes = new ArrayList<>();
-
-        // API 응답이 성공하고 결과가 null이 아닌지 확인
-        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-            // API 응답에서 결과 리스트를 가져옴
-            List<FetchRecipesResultItem> results = response.getBody().getResults();
-
-            // 가져온 결과가 null이 아닌지 확인
-            if (results != null) {
-                // 가져온 결과를 RecipeInfoVO로 변환하여 리스트에 추가
-                for (FetchRecipesResultItem item : results) {
-                    RecipeInfoVO recipe = new RecipeInfoVO();
-                    recipe.setId(item.getId());
-                    recipe.setTitle(item.getTitle());
-                    // 다른 필요한 정보들도 추가할 수 있음
-                    recipes.add(recipe);
-                }
-            }
-        }
-
-        return recipes;
-    }
-    private static class FetchRecipesResponse {
-        private List<FetchRecipesResultItem> results;
-
-        public List<FetchRecipesResultItem> getResults() {
-            return results;
-        }
-
-        public void setResults(List<FetchRecipesResultItem> results) {
-            this.results = results;
-        }
-    }
-
-    private static class FetchRecipesResultItem {
-        private int id;
-        private String title;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
+        return new ArrayList<>();
     }
 
 }

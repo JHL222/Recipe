@@ -13,12 +13,13 @@
         <div class="recipe">
             <h2>${recipe.title}</h2>
             <p>ID: ${recipe.id}</p>
+            <p>${recipeInfo.instructions}</p>
         </div>
     </c:forEach>
 </c:if>
 
 <%-- 레시피 목록이 없는 경우에는 메시지 표시 --%>
-<c:if test="${empty recipes}">
+<c:if test="${noRecipes}">
     <p>No recipes found.</p>
 </c:if>
 

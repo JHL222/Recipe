@@ -3,20 +3,42 @@ package com.example.edu.model;
 import java.util.List;
 
 public class RecipeSearchResultVO {
-    private List<RecipeInfoVO> recipes;
+    private List<RecipeInfoVO> results;
+    private int totalResults;
+    private int offset;
+    private int number;
 
-    public RecipeSearchResultVO() {
+    // Getters and Setters
+
+    public List<RecipeInfoVO> getResults() {
+        return results;
     }
 
-    public RecipeSearchResultVO(List<RecipeInfoVO> recipes) {
-        this.recipes = recipes;
+    public void setResults(List<RecipeInfoVO> results) {
+        this.results = results;
     }
 
-    public List<RecipeInfoVO> getRecipes() {
-        return recipes;
+    public int getTotalResults() {
+        return totalResults;
     }
 
-    public void setRecipes(List<RecipeInfoVO> recipes) {
-        this.recipes = recipes;
+    public void setTotalResults(int totalResults) {
+        this.totalResults = totalResults;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
