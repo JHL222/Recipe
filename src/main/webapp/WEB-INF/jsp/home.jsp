@@ -30,12 +30,16 @@
             <div class="menuDiv">
             <h2>Main</h2>
                 <c:forEach var="recipe" items="${recipes}">
-                    <div class="recipe">
-                        <c:if test="${not empty recipe.image}">
-                            <img src="https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg" class="menuImg" />
-                        </c:if>
-                        <h3 class="menuTitle">${recipe.title}</h3>
-                    </div>
+                    <a href="recipe?recipeId=${recipe.id}">
+                        <div class="recipe">
+                            <c:if test="${not empty recipe.image}">
+                                <img src="https://spoonacular.com/recipeImages/${recipe.id}-480x360.jpg" class="menuImg" />
+                            </c:if>
+                            <h3 class="menuTitle">${recipe.title}</h3>
+
+                        </div>
+                    </a>
+
                 </c:forEach>
             </div>
         </c:if>
