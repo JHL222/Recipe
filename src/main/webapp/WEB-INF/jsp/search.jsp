@@ -45,8 +45,15 @@
     <h1>Recipe Search</h1>
 
     <div class="searchbar">
-        <input type="text" name="query" placeholder="Search recipes..." required>
+        <input type="text" name="query" placeholder="Search recipes...">
         <button type="submit">Search</button>
+    </div>
+
+    <div id="category">
+        <a href="/search?cuisine=korean">Korean</a>
+        <a href="/search?cuisine=mexican">Mexican</a>
+        <a href="/search?diet=vegan">Vegan</a>
+        <a href="/search?intolerances=gluten">Gluten Free</a>
     </div>
 
     <div id="searchResults">

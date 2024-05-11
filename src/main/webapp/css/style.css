@@ -59,10 +59,11 @@ li{
 
 
 .menuDiv {
-    text-align: left;
+    text-align: center;
     font-size: 70%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .menuDiv h2 {
@@ -77,6 +78,7 @@ li{
     flex: 0 0 calc(20% - 20px);
     margin-right: 20px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .menuImg {
@@ -117,4 +119,61 @@ li{
 .searchbar button:active{
     -webkit-transform: translateY(2px);
     transform: translateY(2px);
+}
+
+.recipe_container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home_button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.home_button:hover {
+    background-color: black;
+}
+
+.recipe_header {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.recipe_img {
+    text-align: center;
+}
+
+.recipe_img img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.recipe_ingredients {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+}
+
+
+.recipe_instructions {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
 }

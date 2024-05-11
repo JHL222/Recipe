@@ -7,7 +7,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -104,6 +106,31 @@ public class SpoonacularAdapter {
 
     public List<RecipeInfoVO> searchRecipes(String query) {
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + query + "&instructionsRequired=true";
+
+        HttpHeaders headers = createHeaders();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("query", query)
+                .queryParam("apiKey", apiKey)
+                .queryParam("number", 100);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<RecipeSearchResultVO> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                entity,
+                RecipeSearchResultVO.class);
+
+        RecipeSearchResultVO result = response.getBody();
+        if (result != null && result.getResults() != null) {
+            return result.getResults();
+        }
+
+        return new ArrayList<>();
+    }
+
+    public List<RecipeInfoVO> searchCategory(String query) {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?" + query + "&instructionsRequired=true";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
