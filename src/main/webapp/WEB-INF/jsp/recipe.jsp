@@ -6,37 +6,67 @@
     <meta charset="UTF-8">
     <title>Recipe</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
+
 </head>
 
 <body>
 <div class="recipe_container">
 
-    <div class="recipe_header">
-
-        <div class="home_button">
-            <a href="home.jsp"><button type="button">Home</button></a>
-        </div>
-
-        <h1>${recipeInfo.title}</h1>
+    <div class="slider-container">
+        <a href="/Home">
+            <div class="slide">
+                <img src="/images/image8.png" alt="Image 1">
+            </div>
+            <div class="slide">
+                <img src="/images/image9.png"alt="Image 2">
+            </div>
+            <div class="slide">
+                <img src="/images/image10.png" alt="Image 3">
+            </div>
+        </a>
     </div>
 
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlides() {
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = 'block';
+            setTimeout(showSlides, 3000); // 3초마다 이미지 전환
+        }
+
+        showSlides();
+    </script>
+    <div class="recipe_header">
+        <h1>${recipeInfo.title}</h1>
+    </div>
     <div class="recipe_img">
         <img src="${recipeInfo.image}" alt="${recipeInfo.title}">
     </div>
 
-    <div class="recipe_ingredients">
-        <h2>Ingredients:</h2>
-        <ul>
-            <c:forEach items="${recipeInfo.ingredients}" var="ingredient">
-                <li>${ingredient}</li>
-            </c:forEach>
-        </ul>
-    </div>
-
-    <div class="recipe_instructions">
-        <h3>Instructions:</h3>
-        <p>${recipeInfo.instructions}</p>
-    </div>
+    <table class="recipe_table">
+        <tr>
+            <td class="recipe_ingredients">
+                <h2>Ingredients:</h2>
+                <ul class="ul_">
+                    <c:forEach items="${recipeInfo.ingredients}" var="ingredient">
+                        <li>${ingredient}</li>
+                    </c:forEach>
+                </ul>
+            </td>
+            <td class="recipe_instructions">
+                <h2>Instructions:</h2>
+                <p>${recipeInfo.instructions}</p>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

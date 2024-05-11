@@ -10,6 +10,7 @@ public class RecipeInfoVO {
     private List<String> ingredients;
 
 
+
     public String getTitle() {
         return title;
     }

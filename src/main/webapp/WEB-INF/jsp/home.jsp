@@ -7,59 +7,60 @@
 </head>
 <body>
 
-    <div class="slider-container">
-        <a href="/Home">
-            <div class="slide">
-                <img src="/images/image8.png" alt="Image 1">
-            </div>
-            <div class="slide">
-                <img src="/images/image9.png"alt="Image 2">
-            </div>
-            <div class="slide">
-                <img src="/images/image10.png" alt="Image 3">
-            </div>
-        </a>
-    </div>
-
-    <script>
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slide');
-
-        function showSlides() {
-            slides.forEach(slide => {
-                slide.style.display = 'none';
-            });
-            slideIndex++;
-            if (slideIndex > slides.length) {
-                slideIndex = 1;
-            }
-            slides[slideIndex - 1].style.display = 'block';
-            setTimeout(showSlides, 3000); // 3초마다 이미지 전환
-        }
-
-        showSlides();
-    </script>
-
-    <main>
-        <form action="/search" method="GET">
-            <div class="searchbar">
-                <input type="text" name="query" placeholder="Search recipes...">
-                <button type="submit">Search</button>
-            </div>
-        </form>
-
-        <div id="category">
-            <a href="/search?cuisine=korean">Korean</a>
-            <a href="/search?cuisine=mexican">Mexican</a>
-            <a href="/search?diet=vegan">Vegan</a>
-            <a href="/search?intolerances=gluten">Gluten Free</a>
+<div class="slider-container">
+    <a href="/Home">
+        <div class="slide">
+            <img src="/images/image8.png" alt="Image 1">
         </div>
+        <div class="slide">
+            <img src="/images/image9.png"alt="Image 2">
+        </div>
+        <div class="slide">
+            <img src="/images/image10.png" alt="Image 3">
+        </div>
+    </a>
+</div>
+<div id="category">
+    <a href="/search?cuisine=korean">Korean</a>
+    <a href="/search?cuisine=japanese">Japanese</a>
+    <a href="/search?cuisine=italian">Italian</a>
+    <a href="/search?cuisine=mexican">Mexican</a>
+    <a href="/search?diet=vegan">Vegan</a>
+    <a href="/search?intolerances=gluten">Gluten Free</a>
+</div>
 
-        <div id="main">
-            <c:if test="${not empty recipes}">
-                <div class="menuDiv">
-                    <h2>Main</h2>
-                    <c:forEach var="recipe" items="${recipes}">
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlides() {
+        slides.forEach(slide => {
+            slide.style.display = 'none';
+        });
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+        slides[slideIndex - 1].style.display = 'block';
+        setTimeout(showSlides, 3000); // 3초마다 이미지 전환
+    }
+
+    showSlides();
+</script>
+
+<main>
+    <form action="/search" method="GET">
+        <div class="searchbar">
+            <input type="text" name="query" placeholder="Search recipes...">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+
+    <div id="main">
+        <c:if test="${not empty recipes}">
+            <div class="menuDiv">
+                <h2>Main</h2>
+                <c:forEach var="recipe" items="${recipes}">
                     <a href="recipe?recipeId=${recipe.id}">
                         <div class="recipe">
                             <c:if test="${not empty recipe.image}">
@@ -68,10 +69,10 @@
                             <h3 class="menuTitle">${recipe.title}</h3>
                         </div>
                     </a>
-                    </c:forEach>
-                </div>
-            </c:if>
-        </div>
-    </main>
+                </c:forEach>
+            </div>
+        </c:if>
+    </div>
+</main>
 </body>
 </html>
