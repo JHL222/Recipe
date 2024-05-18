@@ -47,6 +47,7 @@
     }
 
     showSlides();
+
 </script>
 
 
@@ -75,7 +76,41 @@
             </c:forEach>
         </div>
     </c:if>
+    <c:if test="${totalPages > 1}">
+        <div class="pagination">
+            <c:choose>
+                <c:when test="${not empty query}">
+                    <c:set var="baseLink" value="${pageContext.request.contextPath}/search?query=${query}" />
+                </c:when>
+                <c:when test="${not empty cuisine}">
+                    <c:set var="baseLink" value="${pageContext.request.contextPath}/search?cuisine=${cuisine}" />
+                </c:when>
+                <c:when test="${not empty diet}">
+                    <c:set var="baseLink" value="${pageContext.request.contextPath}/search?diet=${diet}" />
+                </c:when>
+                <c:when test="${not empty intolerances}">
+                    <c:set var="baseLink" value="${pageContext.request.contextPath}/search?intolerances=${intolerances}" />
+                </c:when>
+                <c:otherwise>
+                    <c:set var="baseLink" value="${pageContext.request.contextPath}/Home" />
+                </c:otherwise>
+            </c:choose>
+
+            <c:if test="${currentPage > 1}">
+                <a href="${baseLink}&page=${currentPage - 1}">Previous</a>
+            </c:if>
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <a href="${baseLink}&page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
+            </c:forEach>
+            <c:if test="${currentPage < totalPages}">
+                <a href="${baseLink}&page=${currentPage + 1}">Next</a>
+            </c:if>
+        </div>
+    </c:if>
+
 </div>
+
+
 
 </body>
 </html>

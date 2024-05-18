@@ -72,7 +72,23 @@
                 </c:forEach>
             </div>
         </c:if>
+
+        <c:if test="${totalPages > 1}">
+            <div class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <a href="${pageContext.request.contextPath}/Home?page=${currentPage - 1}">Previous</a>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <a href="${pageContext.request.contextPath}/Home?page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
+                </c:forEach>
+                <c:if test="${currentPage < totalPages}">
+                    <a href="${pageContext.request.contextPath}/Home?page=${currentPage + 1}">Next</a>
+                </c:if>
+            </div>
+        </c:if>
     </div>
 </main>
+
+
 </body>
 </html>

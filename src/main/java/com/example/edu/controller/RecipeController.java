@@ -29,37 +29,65 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    public String showSearchPage(@RequestParam @Nullable Map<String, Object> query, Model model) {
+    public String showSearchPage(@RequestParam @Nullable Map<String, Object> query,
+                                 @RequestParam(defaultValue = "1") int page,
+                                 Model model) {
+        int pageSize = 60; // 페이지당 결과 수
+        int maxPages = 15; // 최대 페이지 수
+        int offset = (page - 1) * pageSize; // 페이지 오프셋 계산
+
         if (query.containsKey("query")) {
-            List<RecipeInfoVO> recipes = spoonacularAdapter.searchRecipes((String) query.get("query"));
+            String searchQuery = (String) query.get("query");
+            List<RecipeInfoVO> recipes = spoonacularAdapter.searchRecipes(searchQuery, pageSize, offset);
             model.addAttribute("recipes", recipes);
-            return "search";
+            // 다음에 추가할 코드를 위해 검색어를 모델에 추가
+            model.addAttribute("query", searchQuery);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", maxPages);
         } else if (query.containsKey("cuisine")) {
             String cuisine = (String) query.get("cuisine");
-            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(cuisine);
+            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(cuisine, pageSize, offset);
             model.addAttribute("recipes", recipes);
-            return "search";
+            // 다음에 추가할 코드를 위해 요리 유형을 모델에 추가
+            model.addAttribute("cuisine", cuisine);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", maxPages);
         } else if(query.containsKey("diet")) {
             String diet = (String) query.get("diet");
-            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(diet);
+            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(diet, pageSize, offset);
             model.addAttribute("recipes", recipes);
-            return "search";
-        }else if(query.containsKey("intolerances")) {
+            // 다음에 추가할 코드를 위해 다이어트 정보를 모델에 추가
+            model.addAttribute("diet", diet);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", maxPages);
+        } else if(query.containsKey("intolerances")) {
             String intolerances = (String) query.get("intolerances");
-            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(intolerances);
+            List<RecipeInfoVO> recipes = spoonacularAdapter.searchCategory(intolerances, pageSize, offset);
             model.addAttribute("recipes", recipes);
-            return "search";
-
-        } else {
-            return "search";
+            // 다음에 추가할 코드를 위해 불편한 식품 정보를 모델에 추가
+            model.addAttribute("intolerances", intolerances);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", maxPages);
         }
+
+
+
+        return "search";
     }
 
 
     @GetMapping("/Home")
-    public String home(Model model){
-        List<RecipeInfoVO> recipes = spoonacularAdapter.showRecipes();
+    public String home(@RequestParam(defaultValue = "1") int page, Model model) {
+        int pageSize = 60; // 페이지당 결과 수
+        int maxPages = 15; // 최대 페이지 수
+        int offset = (page - 1) * pageSize; // 페이지 오프셋 계산
+
+        List<RecipeInfoVO> recipes = spoonacularAdapter.showRecipes(pageSize, offset);
         model.addAttribute("recipes", recipes);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", maxPages);
+
         return "home";
     }
+
 }

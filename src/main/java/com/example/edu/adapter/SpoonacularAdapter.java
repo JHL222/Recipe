@@ -7,19 +7,18 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.CacheRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
 import com.example.edu.model.RecipeInfoVO;
 
 
@@ -79,6 +78,14 @@ public class SpoonacularAdapter {
             recipeInfo.setIngredients(ingredientsList);
         }
 
+        RecipeInfoVO NutritionInfoVO = getRecipeNutritions(recipeId);
+        if (NutritionInfoVO != null) {
+            recipeInfo.setCalories(NutritionInfoVO.getCalories());
+            recipeInfo.setCarbs(NutritionInfoVO.getCarbs());
+            recipeInfo.setFat(NutritionInfoVO.getFat());
+            recipeInfo.setProtein(NutritionInfoVO.getProtein());
+        }
+
         return recipeInfo;
     }
 
@@ -105,14 +112,16 @@ public class SpoonacularAdapter {
         return ingredientsList;
     }
 
-    public List<RecipeInfoVO> searchRecipes(String query) {
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" + query + "&instructionsRequired=true";
+    public List<RecipeInfoVO> searchRecipes(String query, int number, int offset) {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?instructionsRequired=true";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("query", query)
                 .queryParam("apiKey", apiKey)
-                .queryParam("number", 100);
+                .queryParam("number", number)
+                .queryParam("offset", offset);
+
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -130,14 +139,15 @@ public class SpoonacularAdapter {
         return new ArrayList<>();
     }
 
-    public List<RecipeInfoVO> searchCategory(String query) {
-        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?" + query + "&instructionsRequired=true";
+    public List<RecipeInfoVO> searchCategory(String query, int number, int offset) {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?instructionsRequired=true";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("query", query)
                 .queryParam("apiKey", apiKey)
-                .queryParam("number", 100);
+                .queryParam("number", number)  // 한 페이지에 출력될 결과 수
+                .queryParam("offset", offset);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -155,14 +165,15 @@ public class SpoonacularAdapter {
         return new ArrayList<>();
     }
 
-    public List<RecipeInfoVO> showRecipes() {
+    public List<RecipeInfoVO> showRecipes(int number, int offset){
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("apiKey", apiKey)
                 .queryParam("addRecipeInformation", true)
-                .queryParam("number", 100); // 최대 100개의 결과를 가져옵니다.
+                .queryParam("number", number)// 한 페이지에 출력될 결과 수
+                .queryParam("offset", offset);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -178,6 +189,49 @@ public class SpoonacularAdapter {
         }
 
         return new ArrayList<>();
+    }
+
+    public RecipeInfoVO getRecipeNutritions(String recipeId) {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + recipeId + "/nutritionWidget.json";
+
+        HttpHeaders headers = createHeaders();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url).queryParam("apiKey", apiKey);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<NutritionInfoVO> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                entity,
+                NutritionInfoVO.class);
+
+        NutritionInfoVO nutritionInfo = response.getBody();
+        RecipeInfoVO recipeInfo = new RecipeInfoVO();
+
+        if (nutritionInfo != null) {
+            recipeInfo.setCalories(nutritionInfo.getCalories());
+            recipeInfo.setCarbs(nutritionInfo.getCarbs());
+            recipeInfo.setFat(nutritionInfo.getFat());
+            recipeInfo.setProtein(nutritionInfo.getProtein());
+        }
+
+        return recipeInfo;
+    }
+
+    static class NutritionInfoVO {
+        private String calories;
+        private String carbs;
+        private String fat;
+        private String protein;
+
+        public String getCalories() { return calories; }
+        public void setCalories(String calories) { this.calories = calories; }
+        public String getCarbs() { return carbs; }
+        public void setCarbs(String carbohydrates) { this.carbs = carbohydrates; }
+        public String getFat() { return fat; }
+        public void setFat(String fats) { this.fat = fats; }
+        public String getProtein() { return protein; }
+        public void setProtein(String proteins) { this.protein = proteins; }
     }
 
 }

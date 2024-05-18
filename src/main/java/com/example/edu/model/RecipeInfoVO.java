@@ -8,7 +8,10 @@ public class RecipeInfoVO {
     private String instructions;
     private int id;
     private List<String> ingredients;
-
+    private String calories;
+    private String carbs;
+    private String fat;
+    private String protein;
 
 
     public String getTitle() {
@@ -50,4 +53,13 @@ public class RecipeInfoVO {
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public String getCalories() { return calories; }
+    public void setCalories(String calories) { this.calories = calories; }
+    public String getCarbs() { return carbs; }
+    public void setCarbs(String carbs) { this.carbs = carbs; }
+    public String getFat() { return fat; }
+    public void setFat(String fat) { this.fat = fat; }
+    public String getProtein() { return protein; }
+    public void setProtein(String protein) { this.protein = protein; }
 }
