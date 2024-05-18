@@ -61,7 +61,8 @@ body {
 .recipe_ingredients, .recipe_new {
     flex: 3;
     margin-right: 20px;
-    height: 350px;
+    height: 450px;
+    overflow: scroll;
 }
 
 .recipe_ingredients h2, .recipe_new h2, .recipe_instructions h2 {
@@ -88,4 +89,8 @@ body {
 
 .recipe_instructions p {
     white-space: pre-line;
+}
+
+.ingredient_div{
+    overflow: scroll;
 }
