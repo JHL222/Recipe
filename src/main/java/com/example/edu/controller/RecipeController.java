@@ -69,11 +69,8 @@ public class RecipeController {
             model.addAttribute("totalPages", maxPages);
         }
 
-
-
         return "search";
     }
-
 
     @GetMapping("/Home")
     public String home(@RequestParam(defaultValue = "1") int page, Model model) {
@@ -89,10 +86,9 @@ public class RecipeController {
         return "home";
     }
 
-
     @GetMapping("/mealplan")
-    public String getMealPlan(@RequestParam String diet, @RequestParam int targetCalories, Model model) {
-        RecipeInfoVO recipes = spoonacularAdapter.createMealPlan(diet, targetCalories);
+    public String getMealPlan(Model model) {
+        RecipeInfoVO recipes = spoonacularAdapter.createMealPlan();
         model.addAttribute("recipes", recipes);
 
         return "mealplan";

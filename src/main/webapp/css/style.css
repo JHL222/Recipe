@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Freesentation-9Black';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+body{
+    font-family: 'Freesentation-9Black';
+}
 .slider-container {
     width: 100%;
     overflow: hidden;
@@ -13,8 +22,15 @@
     object-fit: cover;
 
 }
-
+a{
+    text-decoration: none;
+    color: black;
+}
 h1 {
+    text-align: center;
+}
+
+h2 {
     text-align: center;
 }
 
@@ -59,13 +75,15 @@ li{
 
 
 .menuDiv {
-    text-align: center;
-    font-size:80%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-left:50px;
-    margin-right:50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+    margin-right: 60px;
+
 }
 
 .menuDiv h2 {
@@ -78,14 +96,15 @@ li{
 
 .recipe {
     flex: 0 0 calc(20% - 20px);
-    width: 100%;
+    width: 500px;
+    height: 400px;
     margin-right: 20px;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .menuImg {
-    width: 100%;
+    width: 500px;
     border-radius: 10px;
     border: 1px solid;
 }
@@ -93,6 +112,12 @@ li{
 .menuTitle {
     width: 100%;
     text-align: center;
+    overflow: hidden;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    white-space: normal; /* 텍스트를 여러 줄로 표시 */
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 0;
 }
 
 .menu{
@@ -222,4 +247,42 @@ li{
 #category a:hover {
     background-color: #edfae5; /* 호버시 배경색 */
     color: #498929; /* 호버시 글씨 색상 */
+}
+
+.main {
+    padding-right: 80px;
+    padding-left: 80px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination a {
+    color: #333;
+    padding: 10px 15px;
+    margin: 0 5px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f1f1f1;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
 }

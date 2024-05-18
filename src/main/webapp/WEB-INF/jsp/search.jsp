@@ -64,16 +64,6 @@
 <div id="searchResults">
     <c:if test="${not empty recipes}">
         <div class="menuDiv">
-            <h2>
-                <c:choose>
-                    <c:when test="${not empty param.query}">
-                        Search Results for: ${fn:escapeXml(param.query)}
-                    </c:when>
-                    <c:otherwise>
-                        Search Results
-                    </c:otherwise>
-                </c:choose>
-            </h2>
             <c:forEach var="recipe" items="${recipes}">
                 <a href="recipe?recipeId=${recipe.id}">
                     <div class="recipe">

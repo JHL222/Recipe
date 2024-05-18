@@ -48,7 +48,7 @@
     showSlides();
 </script>
 
-<main>
+<main class="main">
     <form action="/search" method="GET">
         <div class="searchbar">
             <input type="text" name="query" placeholder="Search recipes...">
@@ -56,10 +56,10 @@
         </div>
     </form>
 
+    <h2>Main</h2>
     <div id="main">
         <c:if test="${not empty recipes}">
             <div class="menuDiv">
-                <h2>Main</h2>
                 <c:forEach var="recipe" items="${recipes}">
                     <a href="recipe?recipeId=${recipe.id}">
                         <div class="recipe">

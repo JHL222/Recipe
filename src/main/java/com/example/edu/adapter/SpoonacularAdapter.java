@@ -21,7 +21,6 @@ import java.util.Objects;
 
 import com.example.edu.model.RecipeInfoVO;
 
-
 @Component
 public class SpoonacularAdapter {
 
@@ -122,7 +121,6 @@ public class SpoonacularAdapter {
                 .queryParam("number", number)
                 .queryParam("offset", offset);
 
-
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
         ResponseEntity<RecipeSearchResultVO> response = restTemplate.exchange(
@@ -191,15 +189,14 @@ public class SpoonacularAdapter {
         return new ArrayList<>();
     }
 
-    public RecipeInfoVO createMealPlan(String diet, int targetCalories) {
+    public RecipeInfoVO createMealPlan() {
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate";
 
         HttpHeaders headers = createHeaders();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("apiKey", apiKey)
                 .queryParam("timeFrame", "day")
-                .queryParam("targetCalories", targetCalories)
-                .queryParam("diet", diet);
+                .queryParam("targetCalories", 2000);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -281,5 +278,4 @@ public class SpoonacularAdapter {
         public String getProtein() { return protein; }
         public void setProtein(String proteins) { this.protein = proteins; }
     }
-
 }
