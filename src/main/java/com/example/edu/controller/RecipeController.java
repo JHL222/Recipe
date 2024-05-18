@@ -86,11 +86,5 @@ public class RecipeController {
         return "home";
     }
 
-    @GetMapping("/mealplan")
-    public String getMealPlan(Model model) {
-        RecipeInfoVO recipes = spoonacularAdapter.createMealPlan();
-        model.addAttribute("recipes", recipes);
 
-        return "mealplan";
-    }
 }
