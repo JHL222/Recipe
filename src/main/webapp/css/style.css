@@ -60,10 +60,12 @@ li{
 
 .menuDiv {
     text-align: center;
-    font-size: 70%;
+    font-size:80%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-left:50px;
+    margin-right:50px;
 }
 
 .menuDiv h2 {
@@ -76,6 +78,7 @@ li{
 
 .recipe {
     flex: 0 0 calc(20% - 20px);
+    width: 100%;
     margin-right: 20px;
     margin-bottom: 20px;
     text-align: center;

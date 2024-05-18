@@ -133,7 +133,7 @@
             <img src="${recipeInfo.image}" alt="${recipeInfo.title}">
         </div>
         <div class="recipe_ingredients">
-                <h2>Ingredients:</h2>
+            <h2>Ingredients:</h2>
                 <ul class="ul_">
                     <c:forEach items="${recipeInfo.ingredients}" var="ingredient">
                         <li>${ingredient}</li>

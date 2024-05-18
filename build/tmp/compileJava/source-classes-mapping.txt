@@ -6,10 +6,10 @@ com/example/edu/model/RecipeSearchResultVO.java
  com.example.edu.model.RecipeSearchResultVO
 com/example/edu/ServletInitializer.java
  com.example.edu.ServletInitializer
+com/example/edu/model/RecipeInfoVO.java
+ com.example.edu.model.RecipeInfoVO
 com/example/edu/adapter/SpoonacularAdapter.java
  com.example.edu.adapter.SpoonacularAdapter
  com.example.edu.adapter.SpoonacularAdapter$NutritionInfoVO
-com/example/edu/model/RecipeInfoVO.java
- com.example.edu.model.RecipeInfoVO
 com/example/edu/controller/RecipeController.java
  com.example.edu.controller.RecipeController

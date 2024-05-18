@@ -191,6 +191,54 @@ public class SpoonacularAdapter {
         return new ArrayList<>();
     }
 
+    public RecipeInfoVO createMealPlan(String diet, int targetCalories) {
+        String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate";
+
+        HttpHeaders headers = createHeaders();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("apiKey", apiKey)
+                .queryParam("timeFrame", "day")
+                .queryParam("targetCalories", targetCalories)
+                .queryParam("diet", diet);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<RecipeInfoVO> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                entity,
+                RecipeInfoVO.class);
+
+        RecipeInfoVO recipeInfo = response.getBody();
+
+        if (recipeInfo != null && recipeInfo.getId() != 0) {
+            String ingredientsUrl = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/"
+                    + recipeInfo.getId() + "/ingredientWidget.json";
+
+            HttpHeaders ingredientsHeaders = createHeaders();
+            HttpEntity<?> ingredientsEntity = new HttpEntity<>(ingredientsHeaders);
+
+            ResponseEntity<String> ingredientsResponse = restTemplate.exchange(
+                    ingredientsUrl,
+                    HttpMethod.GET,
+                    ingredientsEntity,
+                    String.class);
+
+            List<String> ingredientsList = parseIngredientsFromResponse(ingredientsResponse.getBody());
+            recipeInfo.setIngredients(ingredientsList);
+        }
+
+        RecipeInfoVO NutritionInfoVO = getRecipeNutritions(String.valueOf(recipeInfo.getId()));
+        if (NutritionInfoVO != null) {
+            recipeInfo.setCalories(NutritionInfoVO.getCalories());
+            recipeInfo.setCarbs(NutritionInfoVO.getCarbs());
+            recipeInfo.setFat(NutritionInfoVO.getFat());
+            recipeInfo.setProtein(NutritionInfoVO.getProtein());
+        }
+
+        return recipeInfo;
+    }
+
     public RecipeInfoVO getRecipeNutritions(String recipeId) {
         String url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" + recipeId + "/nutritionWidget.json";
 
