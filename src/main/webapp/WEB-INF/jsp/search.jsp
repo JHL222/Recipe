@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>">
@@ -63,7 +64,16 @@
 <div id="searchResults">
     <c:if test="${not empty recipes}">
         <div class="menuDiv">
-            <h2>Search Results</h2>
+            <h2>
+                <c:choose>
+                    <c:when test="${not empty param.query}">
+                        Search Results for: ${fn:escapeXml(param.query)}
+                    </c:when>
+                    <c:otherwise>
+                        Search Results
+                    </c:otherwise>
+                </c:choose>
+            </h2>
             <c:forEach var="recipe" items="${recipes}">
                 <a href="recipe?recipeId=${recipe.id}">
                     <div class="recipe">
